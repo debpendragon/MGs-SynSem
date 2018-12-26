@@ -3,45 +3,25 @@ import qualified Data.Set as Set
 
 module MGSyntax where
 	
-	data Alphabet = String
+	data Alph = String
 
-	data Features = [Lic Features | Sel Features | Lic | Sel]
+    data Sel = String
 
-	--data Lic = Set.fromlist ["+wh", "-wh"]
+    data Lic = String
 
-	--data Sel = Set.fromlist ["=d", "=v", "d", "v"]
+    data Feat = Pos Lic | Neg Lic | Cat Sel | Eql Sel | Sel Eql 
+    --              +f          -f       x          =x          x=
 
-    data Lic = Plus String | Minus String
+    data Expr = Tree
 
-    data Plus = "+"
-    data Minus = "-"    
+    data Tree = Arrow Tree Tree | Lex
 
-    data Sel = Equal String | String Equal | String
+    data Arrow =  "<" | ">"
 
-    data Equal = "="
+    data Lex = (Alph, [Feat])
 
-	data Lex = (Alphabet, Features) -- and Meaning :O
+    head :: Expr -> Expr
+    head (alph,feat) = (alph,feat)
+    head (arr, left, right) = if arr = "<" then head left else head right
+ 
 
-	--Ops = [(Merge), (Move)]
-
-	---
-	--- define Expression: 
-	---
-
-	data Expression = Tree
-
-	data Tree = (Arrow, Tree, Tree) | (Alphabet, Features)
-
-	data Arrow  = "<" | ">"
-
-
-	--
-	-- define head:
-	--
-
-	head :: Expression -> Expression
-	head (alph,feat) = (alph,feat)
-	head (arr, left, right) = if arr = "<" then head left else head right
-
-	merge :: Expression -> Expression -> Expression
-	merge (alph1,h1:feat1) (alph2,h2:feat2) = if 
