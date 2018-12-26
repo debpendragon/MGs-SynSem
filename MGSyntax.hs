@@ -10,7 +10,7 @@ module MGSyntax where
     data Lic = String
 
     data Feat = Pos Lic | Neg Lic | Cat Sel | Eql Sel | Sel Eql 
-    --              +f          -f       x          =x          x=
+    --              +f          -f       x       =x      x=
 
     data Expr = Tree
 
@@ -20,6 +20,9 @@ module MGSyntax where
 
     data Lex = (Alph, [Feat])
 
+    --Functions--
+
+    --head of an expression--
     head :: Expr -> Expr
     head (alph,feat) = (alph,feat)
     head (arr, left, right) = if arr = "<" then head left else head right
