@@ -1,30 +1,34 @@
+module MGSyntax where
+import Prelude hiding (head)
+
 import Data.Set (Set)
 import qualified Data.Set as Set
-
-module MGSyntax where
 	
-	data Alph = String
+type Alph = String
 
-    data Sel = String
+type Sel = String
 
-    data Lic = String
+type Lic = String
 
-    data Feat = Pos Lic | Neg Lic | Cat Sel | Eql Sel | Sel Eql 
-    --              +f          -f       x       =x      x=
+data Feat = Pos Lic | Neg Lic | Cat Sel | Eql Sel deriving (Show)
 
-    data Expr = Tree
+--Sel Eql |  
+ --              +f          -f       x       =x      x=
 
-    data Tree = Arrow Tree Tree | Lex
+type Expr = Tree
 
-    data Arrow =  "<" | ">"
+data Tree = Complex (Arrow, Tree, Tree) | Lex (Alph, [Feat]) deriving (Show)
 
-    data Lex = (Alph, [Feat])
+type Arrow = String
+
+
+--examples of expressions
+expr1 = Lex ("ointment", [Cat "d"])
+expr2 = Complex ("<", (Lex ("saw", [Eql "d", Cat "V"])), (Lex ("everyone", [Cat "d", Neg "k"])))
 
     --Functions--
 
     --head of an expression--
-    head :: Expr -> Expr
-    head (alph,feat) = (alph,feat)
-    head (arr, left, right) = if arr = "<" then head left else head right
- 
-
+head :: Expr -> Expr
+head (Lex (alph, feat)) = (Lex (alph, feat))
+head (Complex (arr, left, right)) = if arr == "<" then head left else head right
