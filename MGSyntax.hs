@@ -32,3 +32,10 @@ expr2 = Complex ("<", (Lex ("saw", [Eql "d", Cat "V"])), (Lex ("everyone", [Cat 
 head :: Expr -> Expr
 head (Lex (alph, feat)) = (Lex (alph, feat))
 head (Complex (arr, left, right)) = if arr == "<" then head left else head right
+
+merge :: Expr -> Expr -> Expr
+merge (Lex (alph, feat)) (Lex (alph, feat)) = undefined
+merge (Lex (alph, feat)) (Complex (arr, left, right)) = undefined
+merge (Complex (arr, left, right)) (Lex (alph, feat)) = undefined
+merge (Complex (arr, left, right)) (Complex (arr, left, right)) = undefined
+
