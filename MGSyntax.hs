@@ -14,7 +14,6 @@ data Feat = Pos Lic | Neg Lic | Cat Sel | Eql Sel deriving (Show)
 
 --Sel Eql |  
  --              +f          -f       x       =x      x=
-
 type Expr = Tree
 
 data Tree = Complex (Arrow, Tree, Tree) | Lex (Alph, [Feat]) deriving (Show)
